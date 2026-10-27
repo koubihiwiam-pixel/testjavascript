@@ -47,8 +47,9 @@
       </div>
 
       <button
-        type="submit"
+        type=""
         class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium rounded px-4 py-2"
+        id="addTaskBtn"
       >
         Add task
       </button>
@@ -92,23 +93,7 @@
     <p id="empty-message" class="text-slate-500 hidden">No tasks yet. Add one above.</p>
     <ul id="task-list" class="space-y-3">
       <!-- EXAMPLE task: shows how a task should look. Delete this <li> once your JavaScript works. -->
-      <li class="bg-white rounded-lg shadow p-4 flex items-start justify-between gap-4">
-        <div>
-          <h3 class="font-semibold">Finish homework</h3>
-          <p class="text-sm text-slate-600 mt-1">Complete the JavaScript exercises for Friday.</p>
-          <span class="inline-block text-xs bg-slate-200 rounded-full px-2 py-1 mt-2">In progress</span>
-        </div>
-        <div class="flex flex-col items-end gap-2">
-          <select class="border border-slate-300 rounded px-2 py-1 text-xs bg-white">
-            <option value="To do">To do</option>
-            <option value="In progress" selected>In progress</option>
-            <option value="Done">Done</option>
-          </select>
-          <button class="text-sm text-red-600 hover:text-red-800 font-medium">
-            Delete
-          </button>
-        </div>
-      </li>
+      
     </ul>
   </main>
 
@@ -139,6 +124,58 @@
  <script>
 
 
+
+  addTaskBtn.addEventListener('click', addTask);
+  let Taches =[];
+  function addTask (e){
+
+    e.preventDefault()
+    
+    
+    const objet ={};
+    
+    const Title = document.getElementById('title');
+    const Description =document.getElementById('description');
+    const Status = document.getElementById('status');
+    if(Title.value && Description.value){
+    objet.titre = Title.value;
+    objet.description = Description.value;
+    objet.status = Status.value;
+    }
+    else{
+      alert('remplir les champs');
+    }
+    Title.value="";
+    Description.value="";
+    Taches.push(objet);
+    afficherTache();
+
+    
+  }
+
+function afficherTache(){
+  const taskList = document.getElementById('task-list');
+    console.log(taskList)
+  Taches.forEach(function(tache){
+      taskList.innerHTML += `<li class="bg-white rounded-lg shadow p-4 flex items-start justify-between gap-4">
+      <div>
+        <h3 class="task-title font-semibold">${tache.titre}</h3>
+        <p class="task-description text-sm text-slate-600 mt-1">${tache.description}</p>
+        <span class="task-status inline-block text-xs bg-slate-200 rounded-full px-2 py-1 mt-2">${tache.status}</span>
+      </div>
+      <div class="flex flex-col items-end gap-2">
+        <select class="task-status-select border border-slate-300 rounded px-2 py-1 text-xs bg-white">
+          <option value="To do">To do</option>
+          <option value="In progress">In progress</option>
+          <option value="Done">Done</option>
+        </select>
+        <button class="delete-btn text-sm text-red-600 hover:text-red-800 font-medium">
+          Delete
+        </button>
+      </div>
+    </li>`
+    })
+}
   
  </script>
 </body>
